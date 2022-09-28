@@ -8,13 +8,15 @@ import Alert from './components/Alert';
 import Login from './components/Login';
 import Signup from './components/Signup';
 
+
 function App() {
+  
   return (
     <>
       <NoteState>
         <Router>
           <Navbar />
-          <Alert msg="this is" />
+          <Alert  />
           <div className="container">
             <Routes>
               <Route exact path='/' element={<Home />}></Route>

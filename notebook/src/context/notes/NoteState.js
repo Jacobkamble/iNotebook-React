@@ -7,9 +7,9 @@ const NoteState = (props) => {
     const notesIntail = []
 
     const [notes, setNotes] = useState(notesIntail);
+    const [alert, setAlert] = useState(null);
 
     // Get Notes
-
     const getNote = async () => {
         console.log("calling fetch note");
         // To do api call
@@ -102,9 +102,20 @@ const NoteState = (props) => {
         }
         setNotes(newNotes);
     }
+
+    const showAlert = (message, type) => {
+        setAlert({
+            message: message,
+            type: type
+        })
+
+        setTimeout(() => {
+            setAlert(null)
+        }, 3000);
+    }
     return (
         <>
-            <NoteContext.Provider value={{ notes, getNote, setNotes, addNote, deleteNote, editNote }} >
+            <NoteContext.Provider value={{ notes, getNote, setNotes, addNote, deleteNote, editNote, alert, showAlert }} >
                 {props.children}
             </NoteContext.Provider>
         </>

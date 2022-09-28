@@ -1,12 +1,11 @@
-import React,{useContext,useEffect} from 'react'
-// import NoteContext from '../context/notes/NoteContext';
-// import NoteState from '../context/notes/NoteState'
+import React from 'react'
+
 
 export default function About() {
 
   return (
     <>
-      <h1>About iis </h1>
+      <h1>About Us </h1>
     </>
   )
 }
