@@ -47,6 +47,7 @@ const NoteState = (props) => {
         setNotes(notes.concat(json));
     }
 
+    // Delete Note
     const deleteNote = async (id) => {
         // TODO API Call
 
@@ -72,6 +73,8 @@ const NoteState = (props) => {
         console.log(id);
     }
 
+
+    // update note
     const editNote = async (id, title, description, tag) => {
         // API Call 
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
@@ -103,6 +106,7 @@ const NoteState = (props) => {
         setNotes(newNotes);
     }
 
+    // Show Alert
     const showAlert = (message, type) => {
         setAlert({
             message: message,
@@ -113,6 +117,7 @@ const NoteState = (props) => {
             setAlert(null)
         }, 3000);
     }
+
     return (
         <>
             <NoteContext.Provider value={{ notes, getNote, setNotes, addNote, deleteNote, editNote, alert, showAlert }} >

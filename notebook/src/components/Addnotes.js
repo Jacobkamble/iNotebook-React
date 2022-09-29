@@ -21,6 +21,7 @@ export default function Addnotes() {
     return (
         <>
             <div className="container mt-3" style={{ width: "" }}>
+
                 <div className="d-flex justify-content-between align-items-center">
                     <h3>Add Note</h3>
                     <h6>Pratik</h6>

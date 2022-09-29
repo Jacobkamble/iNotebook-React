@@ -10,13 +10,13 @@ import Signup from './components/Signup';
 
 
 function App() {
-  
+
   return (
     <>
       <NoteState>
         <Router>
           <Navbar />
-          <Alert  />
+          <Alert />
           <div className="container">
             <Routes>
               <Route exact path='/' element={<Home />}></Route>
