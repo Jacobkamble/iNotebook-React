@@ -5,7 +5,7 @@ import NoteContext from '../context/notes/NoteContext';
 export default function Login() {
 
     const context = useContext(NoteContext);
-    const { showAlert } = context;
+    const {getUserdata, showAlert } = context;
 
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({ email: "", password: "" })
@@ -17,9 +17,9 @@ export default function Login() {
 
 
     const handleSubmit = async (e) => {
+        
         e.preventDefault();
         const url = `http://localhost:5000/api/auth/login`;
-        console.log("Handle Submit");
         const response = await fetch(url, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -28,13 +28,13 @@ export default function Login() {
         )
 
         const json = await response.json();
-        console.log(json);
 
         if (json.success) {
             // save the auth token to localstorage and redirect
             localStorage.setItem("token", json.authtoken);
             navigate("/");
-            showAlert("Login Successfully...!!!", 'primary')
+            showAlert("Login Successfully...!!!", 'primary');
+            getUserdata();
         }
         else {
             showAlert("Please Enter valid email and password...!!!", 'danger')

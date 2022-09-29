@@ -28,7 +28,6 @@ export default function Notes() {
         setNote({ ...note, [e.target.name]: e.target.value });
     }
     const handleAddNote = (e) => {
-        console.log("Updating note", note);
         editNote(note.id, note.etitle, note.edescription, note.etag);
         refClose.current.click();
         showAlert("Note Updated Successfully", 'primary');

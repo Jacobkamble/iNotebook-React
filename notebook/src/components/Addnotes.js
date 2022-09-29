@@ -3,7 +3,7 @@ import NoteContext from '../context/notes/NoteContext';
 
 export default function Addnotes() {
     const context = useContext(NoteContext);
-    const { addNote, showAlert } = context;
+    const { addNote, showAlert, user,noOfNotes,timestamp } = context;
 
     const [note, setNote] = useState({ title: "", description: "", tag: "" });
 
@@ -22,11 +22,12 @@ export default function Addnotes() {
         <>
             <div className="container mt-3" style={{ width: "" }}>
 
-                <div className="d-flex justify-content-between align-items-center">
-                    <h3>Add Note</h3>
-                    <h6>Pratik</h6>
-
+                <div className="d-flex flex-column ">
+                        <h6>User : {user}</h6>
+                        <h6>No Of Notes Avaible : {noOfNotes}</h6>
+                        <h6>Account Created On : {timestamp}</h6>
                 </div>
+                <h3 className='my-1'>Add Note</h3>
 
                 <form>
                     <div className="mb-1">

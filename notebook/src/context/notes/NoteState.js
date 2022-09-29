@@ -4,15 +4,16 @@ const NoteState = (props) => {
 
     const host = "http://localhost:5000"
 
-    const notesIntail = []
-
-    const [notes, setNotes] = useState(notesIntail);
+    const [notes, setNotes] = useState([]);
     const [alert, setAlert] = useState(null);
+    const [user, setUser] = useState("");
+    const [noOfNotes, setNoOfNotes] = useState(0);
+    const [timestamp, setTimestamp] = useState("");
 
     // Get Notes
     const getNote = async () => {
-        console.log("calling fetch note");
         // To do api call
+        getUserdata();
 
         const response = await fetch(`${host}/api/notes/fetchallnotes`, {
             method: "GET",
@@ -24,13 +25,12 @@ const NoteState = (props) => {
         })
 
         const json = await response.json();
+        setNoOfNotes(json.length);
         setNotes(json);
-        console.log(json);
     }
 
     // Add note
     const addNote = async (title, description, tag) => {
-        console.log("calling add note");
         // To do api call
 
         const response = await fetch(`${host}/api/notes/addnote`, {
@@ -43,7 +43,7 @@ const NoteState = (props) => {
         })
 
         const json = await response.json();
-        console.log(json);
+        setNoOfNotes(noOfNotes + 1);
         setNotes(notes.concat(json));
     }
 
@@ -52,7 +52,7 @@ const NoteState = (props) => {
         // TODO API Call
 
 
-        const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+        await fetch(`${host}/api/notes/deletenote/${id}`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
@@ -61,23 +61,19 @@ const NoteState = (props) => {
             // body: JSON.stringify()
         })
 
-        const json = await response.json();
-
-        console.log(json);
-
-        console.log("deleting note");
+        // const json = await response.json();
         const newNotes = notes.filter((note) => {
             return note._id !== id
         })
+        setNoOfNotes(noOfNotes - 1);
         setNotes(newNotes);
-        console.log(id);
     }
 
 
     // update note
     const editNote = async (id, title, description, tag) => {
-        // API Call 
-        const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+        // API Call
+        await fetch(`${host}/api/notes/updatenote/${id}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -86,9 +82,7 @@ const NoteState = (props) => {
             body: JSON.stringify({ title, description, tag })
         })
 
-        const json = await response.json();
-
-        console.log(json);
+        // const json = await response.json();
 
         let newNotes = JSON.parse(JSON.stringify(notes));
 
@@ -106,6 +100,37 @@ const NoteState = (props) => {
         setNotes(newNotes);
     }
 
+
+    const capatalize = (word) => {
+        const lower = word.toLowerCase();
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }
+
+    // get User data
+
+    const getUserdata = async () => {
+        // To do api call
+
+        const response = await fetch(`${host}/api/auth/getuser`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem("token")
+            },
+
+        })
+        
+        const json = await response.json();
+        const userFetch = capatalize(json.name);
+        
+        const date = new Date(json.timestamp);
+        const strTime = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+        setTimestamp(strTime);
+        setUser(userFetch)
+
+    }
+
+
     // Show Alert
     const showAlert = (message, type) => {
         setAlert({
@@ -120,7 +145,7 @@ const NoteState = (props) => {
 
     return (
         <>
-            <NoteContext.Provider value={{ notes, getNote, setNotes, addNote, deleteNote, editNote, alert, showAlert }} >
+            <NoteContext.Provider value={{ notes, user, noOfNotes, timestamp, getNote, setNotes, addNote, deleteNote, editNote, getUserdata, alert, showAlert }} >
                 {props.children}
             </NoteContext.Provider>
         </>

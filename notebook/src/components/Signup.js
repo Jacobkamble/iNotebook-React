@@ -12,13 +12,11 @@ export default function Signup() {
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    console.log(credentials)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = `http://localhost:5000/api/auth/createuser`;
-    console.log("Handle Submit");
     const response = await fetch(url, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
@@ -27,7 +25,6 @@ export default function Signup() {
     )
 
     const json = await response.json();
-    console.log(json);
 
     if (json.success) {
       // save the auth token to localstorage and redirect
@@ -60,7 +57,7 @@ export default function Signup() {
 
           <div className="mb-1">
             <label htmlFor="exampleInputPassword1" className="form-label">Confirm Password</label>
-            <input required minLength={5} onChange={onChange} value={credentials.setCredentials} name='cpassword' type="password" className="form-control" id="password" />
+            <input required minLength={5} onChange={onChange} value={credentials.setCredentials} name='cpassword' type="password" className="form-control" id="cpassword" />
           </div>
 
           <button type="submit" className="mt-2 btn btn-danger">Create Account</button>
